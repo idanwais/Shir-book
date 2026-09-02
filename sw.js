@@ -1,4 +1,4 @@
-const CACHE='shir-singlefile-v2';
+const CACHE='shir-singlefile-v3';
 const ASSETS=['./','./index.html'];
 
 self.addEventListener('install',e=>{

@@ -37,9 +37,11 @@ button:disabled{opacity:.22}
     <div id="front" class="page"><img id="frontImg" alt=""></div>
   </div></div>
   <div id="bar">
+    <button id="first" aria-label="לעמוד הראשון" title="לעמוד הראשון">⇤</button>
     <button id="prev" aria-label="עמוד קודם">‹</button>
     <div id="count"></div>
     <button id="next" aria-label="עמוד הבא">›</button>
+    <button id="last" aria-label="לעמוד האחרון" title="לעמוד האחרון">⇥</button>
   </div>
 </div>
 <script>
@@ -53,8 +55,10 @@ const under=document.getElementById('under');
 const frontImg=document.getElementById('frontImg');
 const underImg=document.getElementById('underImg');
 const count=document.getElementById('count');
+const first=document.getElementById('first');
 const prev=document.getElementById('prev');
 const next=document.getElementById('next');
+const last=document.getElementById('last');
 const reader=document.getElementById('reader');
 
 function paint(){
@@ -86,8 +90,22 @@ function goPrev(){
   setTimeout(()=>{current--;busy=false;paint()},620);
 }
 
-next.onclick=goNext;
+function goFirst(){
+  if(busy || current===0) return;
+  current=0;
+  paint();
+}
+
+function goLast(){
+  if(busy || current===PAGES.length-1) return;
+  current=PAGES.length-1;
+  paint();
+}
+
+first.onclick=goFirst;
 prev.onclick=goPrev;
+next.onclick=goNext;
+last.onclick=goLast;
 
 let sx=0,sy=0;
 reader.addEventListener('touchstart',e=>{
@@ -111,7 +129,7 @@ document.addEventListener('keydown',e=>{
 paint();
 
 if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=2').catch(()=>{}));
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=3').catch(()=>{}));
 }
 </script>
 </body>
