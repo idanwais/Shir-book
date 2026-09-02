@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#2a1d3d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -130,6 +130,63 @@ button:disabled{opacity:.22}
   #jumpFirst,#jumpLast{width:50px;height:50px}
 }
 
+
+/* v7: controls at the book's upper corners + better standalone iPad viewport */
+html,body{
+  width:100%;
+  height:100%;
+  min-height:100%;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+}
+body{
+  min-height:100dvh;
+}
+#reader{
+  width:100vw !important;
+  height:100dvh !important;
+  max-width:none !important;
+  max-height:none !important;
+  padding:0 !important;
+  margin:0 !important;
+  box-sizing:border-box;
+}
+#book{
+  max-width:100vw !important;
+  max-height:100dvh !important;
+}
+#readerControls{
+  position:fixed;
+  inset:0;
+  transform:none;
+  z-index:10001;
+  display:block;
+  pointer-events:none;
+}
+#readerControls .readerCtl{
+  position:fixed;
+  top:max(14px, env(safe-area-inset-top));
+  pointer-events:auto;
+}
+#fullscreenBtn{
+  right:max(16px, env(safe-area-inset-right));
+}
+#infoBtn{
+  left:max(16px, env(safe-area-inset-left));
+}
+@supports not (height:100dvh){
+  #reader{height:100vh !important;}
+  #book{max-height:100vh !important;}
+}
+@media (display-mode: standalone){
+  html,body,#reader{
+    width:100vw !important;
+    height:100dvh !important;
+    min-height:100dvh !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -145,13 +202,13 @@ button:disabled{opacity:.22}
   </div>
 </div>
 
-<button id="jumpFirst" aria-label="לעמוד הראשון" title="לעמוד הראשון">⇤</button>
-<button id="jumpLast" aria-label="לעמוד האחרון" title="לעמוד האחרון">⇥</button>
+<button id="jumpFirst" aria-label="לעמוד הראשון" title="לעמוד הראשון">⇥</button>
+<button id="jumpLast" aria-label="לעמוד האחרון" title="לעמוד האחרון">⇤</button>
 
 
 <div id="readerControls">
-  <button class="readerCtl" id="infoBtn" aria-label="מידע" title="מידע">ⓘ</button>
   <button class="readerCtl" id="fullscreenBtn" aria-label="מסך מלא" title="מסך מלא">⛶</button>
+  <button class="readerCtl" id="infoBtn" aria-label="מידע" title="מידע">ⓘ</button>
 </div>
 <div id="progressTrack"><div id="progressFill"></div></div>
 
@@ -382,10 +439,34 @@ reader.addEventListener('touchend',()=>{
 
 showControls();
 
+
+function fitBookToViewport(){
+  const vv=window.visualViewport;
+  const vw=vv ? vv.width : window.innerWidth;
+  const vh=vv ? vv.height : window.innerHeight;
+  document.documentElement.style.setProperty('--app-vw',vw+'px');
+  document.documentElement.style.setProperty('--app-vh',vh+'px');
+  reader.style.width=vw+'px';
+  reader.style.height=vh+'px';
+
+  // Preserve the PDF/page aspect ratio and maximize the page within the visible viewport.
+  const ratio=1.4143577;
+  let w=vw, h=w/ratio;
+  if(h>vh){ h=vh; w=h*ratio; }
+  book.style.width=w+'px';
+  book.style.height=h+'px';
+}
+window.addEventListener('resize',fitBookToViewport);
+window.addEventListener('orientationchange',()=>setTimeout(fitBookToViewport,120));
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize',fitBookToViewport);
+}
+fitBookToViewport();
+
 paint();
 
 if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6').catch(()=>{}));
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=7').catch(()=>{}));
 }
 </script>
 </body>
