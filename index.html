@@ -293,8 +293,8 @@ function goPrev(){
   setTimeout(()=>{current--;busy=false;paint()},620);
 }
 
-prev.onclick=goPrev;
-next.onclick=goNext;
+prev.onclick=goNext;
+next.onclick=goPrev;
 
 jumpFirst.onclick=()=>{
   if(busy || current===0) return;
@@ -466,7 +466,7 @@ fitBookToViewport();
 paint();
 
 if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=7').catch(()=>{}));
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=8').catch(()=>{}));
 }
 </script>
 </body>
