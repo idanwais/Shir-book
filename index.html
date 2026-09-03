@@ -107,6 +107,12 @@ button:disabled{opacity:.22}
 .modalCard .author{font-size:18px;margin-bottom:22px}
 .modalCard p{font-size:17px;line-height:1.65;margin:12px 0}
 .modalCard .copyright{font-size:14px;margin-top:22px;opacity:.72}
+.supportBox{margin-top:24px;padding-top:20px;border-top:1px solid rgba(52,39,67,.16)}
+.supportBox h3{font-size:19px;margin:0 0 8px;color:#342743}
+.supportBox p{font-size:15px;line-height:1.55;margin:7px 0}
+.supportAmounts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px;direction:rtl}
+.supportBtn{display:inline-flex;align-items:center;justify-content:center;min-width:62px;min-height:42px;padding:8px 13px;border-radius:13px;background:#6f4a96;color:#fff;text-decoration:none;font-size:15px;font-weight:700;border:0}
+.supportBtn.other{min-width:94px;background:#342743}
 .modalActions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
 .modalBtn{
   width:auto;height:auto;min-height:44px;padding:10px 18px;border-radius:14px;
@@ -218,6 +224,18 @@ body{
     <div class="author">מאת: עידן וייסמן</div>
     <p>סיפור על ילדה שמגלה שלפעמים הדבר שהכי קשה לנו בעצמנו יכול להיות גם אחד הכוחות הגדולים שלנו.</p>
     <div class="copyright">© 2026 עידן וייסמן<br>כל הזכויות שמורות.</div>
+    <div class="supportBox">
+      <h3>הספר הזה ניתן לקריאה בחינם ❤️</h3>
+      <p>אם נהניתם ממנו ותרצו לתמוך ביצירה של ספרים נוספים, אפשר להשאיר תרומה קטנה.</p>
+      <p>התמיכה היא לבחירתכם בלבד, והספר נשאר חופשי לקריאה לכולם.</p>
+      <div class="supportAmounts">
+        <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/10ILS" target="_blank" rel="noopener noreferrer">₪10</a>
+        <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/20ILS" target="_blank" rel="noopener noreferrer">₪20</a>
+        <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/30ILS" target="_blank" rel="noopener noreferrer">₪30</a>
+        <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/40ILS" target="_blank" rel="noopener noreferrer">₪40</a>
+        <a class="supportBtn other" href="https://www.paypal.me/Idanwaisman" target="_blank" rel="noopener noreferrer">סכום אחר</a>
+      </div>
+    </div>
     <div class="modalActions"><button class="modalBtn" id="closeInfo">סגירה</button></div>
   </div>
 </div>
@@ -480,7 +498,7 @@ paint();
 if('serviceWorker' in navigator){
   window.addEventListener('load',async()=>{
     try{
-      const reg=await navigator.serviceWorker.register('./sw.js?v=10');
+      const reg=await navigator.serviceWorker.register('./sw.js?v=11');
       await navigator.serviceWorker.ready;
       const worker=reg.active||reg.waiting||reg.installing||navigator.serviceWorker.controller;
       if(worker) worker.postMessage({type:'CACHE_ALL_PAGES'});
