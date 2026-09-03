@@ -193,6 +193,13 @@ body{
   }
 }
 
+
+.supportMethod{margin-top:16px}
+.supportMethodTitle{font-size:16px;font-weight:800;color:#342743;margin-bottom:5px}
+.supportHint{font-size:13px!important;opacity:.78;margin:4px 0 10px!important}
+.supportWide{min-width:180px;padding-left:18px;padding-right:18px}
+.paypalMethod{margin-top:18px;padding-top:14px;border-top:1px solid rgba(52,39,67,.10)}
+
 </style>
 </head>
 <body>
@@ -226,14 +233,24 @@ body{
     <div class="copyright">© 2026 עידן וייסמן<br>כל הזכויות שמורות.</div>
     <div class="supportBox">
       <h3>הספר הזה ניתן לקריאה בחינם ❤️</h3>
-      <p>אם נהניתם ממנו ותרצו לתמוך ביצירה של ספרים נוספים, אפשר להשאיר תרומה קטנה.</p>
+      <p>אם נהניתם ממנו ותרצו לתמוך ביצירה של ספרים נוספים, אפשר לבחור בדרך שנוחה לכם.</p>
       <p>התמיכה היא לבחירתכם בלבד, והספר נשאר חופשי לקריאה לכולם.</p>
-      <div class="supportAmounts">
-        <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/10ILS" target="_blank" rel="noopener noreferrer">₪10</a>
-        <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/20ILS" target="_blank" rel="noopener noreferrer">₪20</a>
-        <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/30ILS" target="_blank" rel="noopener noreferrer">₪30</a>
-        <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/40ILS" target="_blank" rel="noopener noreferrer">₪40</a>
-        <a class="supportBtn other" href="https://www.paypal.me/Idanwaisman" target="_blank" rel="noopener noreferrer">סכום אחר</a>
+
+      <div class="supportMethod">
+        <div class="supportMethodTitle">PayBox</div>
+        <p class="supportHint">בקבוצת התמיכה אפשר לבחור ₪10, ₪20, ₪30, ₪40 או כל סכום אחר.</p>
+        <a class="supportBtn supportWide" href="https://links.payboxapp.com/mcT9DBeM85b" target="_blank" rel="noopener noreferrer">תמיכה דרך PayBox</a>
+      </div>
+
+      <div class="supportMethod paypalMethod">
+        <div class="supportMethodTitle">PayPal</div>
+        <div class="supportAmounts">
+          <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/10ILS" target="_blank" rel="noopener noreferrer">₪10</a>
+          <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/20ILS" target="_blank" rel="noopener noreferrer">₪20</a>
+          <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/30ILS" target="_blank" rel="noopener noreferrer">₪30</a>
+          <a class="supportBtn" href="https://www.paypal.me/Idanwaisman/40ILS" target="_blank" rel="noopener noreferrer">₪40</a>
+          <a class="supportBtn other" href="https://www.paypal.me/Idanwaisman" target="_blank" rel="noopener noreferrer">סכום אחר</a>
+        </div>
       </div>
     </div>
     <div class="modalActions"><button class="modalBtn" id="closeInfo">סגירה</button></div>
@@ -498,7 +515,7 @@ paint();
 if('serviceWorker' in navigator){
   window.addEventListener('load',async()=>{
     try{
-      const reg=await navigator.serviceWorker.register('./sw.js?v=11');
+      const reg=await navigator.serviceWorker.register('./sw.js?v=12');
       await navigator.serviceWorker.ready;
       const worker=reg.active||reg.waiting||reg.installing||navigator.serviceWorker.controller;
       if(worker) worker.postMessage({type:'CACHE_ALL_PAGES'});
