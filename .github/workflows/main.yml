@@ -19,14 +19,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Extract book
+      -       - name: Extract book
         run: |
           rm -rf pages
+          rm -rf temp_book
           unzip -o book-package.zip -d temp_book
-          cp -f temp_book/index.html ./index.html
-          cp -f temp_book/sw.js ./sw.js
-          rm -rf pages
-          cp -R temp_book/pages ./pages
+          cp -f temp_book/package/index.html ./index.html
+          cp -f temp_book/package/sw.js ./sw.js
+          cp -R temp_book/package/pages ./pages
           rm -rf temp_book
 
       - name: Commit updated book
