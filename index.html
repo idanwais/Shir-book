@@ -588,7 +588,7 @@ paint();
 if('serviceWorker' in navigator){
   window.addEventListener('load',async()=>{
     try{
-      const reg=await navigator.serviceWorker.register('./sw.js?v=13');
+      const reg=await navigator.serviceWorker.register('./sw.js?v=15');
       await navigator.serviceWorker.ready;
       const worker=reg.active||reg.waiting||reg.installing||navigator.serviceWorker.controller;
       if(worker) worker.postMessage({type:'CACHE_ALL_PAGES'});
